@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class AI : MonoBehaviour {
+public class AI : MonoBehaviour 
+{
 
+	private GameController gc;
 	private GameObject target;
 	private NavMeshAgent agent;
 	private Transform dest;
@@ -12,12 +14,17 @@ public class AI : MonoBehaviour {
 		target = GameObject.FindGameObjectWithTag ("Player");
 		agent = GetComponent<NavMeshAgent> ();
 		dest = target.transform;
+		gc = GameObject.FindGameObjectWithTag ("GameController").GetComponent<GameController> ();
 	}
 
 	
 	// Update is called once per frame
 	void Update () {
-		agent.SetDestination (dest.position);
+		if (gc.playing) {
+			agent.SetDestination (dest.position);
+		} else {
+			agent.SetDestination(this.gameObject.GetComponent<Transform>().position);
+		}
 
 	}
 }

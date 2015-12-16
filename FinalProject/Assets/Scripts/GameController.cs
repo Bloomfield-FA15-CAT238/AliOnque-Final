@@ -10,9 +10,10 @@ public class GameController : MonoBehaviour
 	public PlayerStats ps;
 	//FOR THE DAMN HUD
 	private Text hudStuff;
-
+	public bool playing;
 	private GameObject player;
-
+	private GameObject hud;
+	private GameObject menu;
 	void Awake ()
 	{//MustMakeGCStatic
 		if (gc == null) {
@@ -29,7 +30,10 @@ public class GameController : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-
+		hud = GameObject.Find ("MainHud");
+		menu = GameObject.Find ("MenuScreen");
+		menu.SetActive (false);
+		playing = true;
 		ps.time = 0.0f;
 		ps.lvl = Application.loadedLevel;
 		if(PlayerPrefs.HasKey("player"))
@@ -62,6 +66,25 @@ public class GameController : MonoBehaviour
 	public void lastLvl()
 	{	ps.lvl--;
 		Application.LoadLevel (ps.lvl);
+	}
+
+	public void pausePlay()
+	{
+		if (player == null) {
+			player = GameObject.FindWithTag ("Player");
+		}
+
+		if (playing) {
+			player.SetActive(false);
+			hud.SetActive(false);
+			menu.SetActive(true);
+			playing = false;
+		} else {
+			player.SetActive(true);
+			hud.SetActive(true);
+			menu.SetActive(false);
+			playing = true;
+		}
 	}
 
 	public void endGame()
