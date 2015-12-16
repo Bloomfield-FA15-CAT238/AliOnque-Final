@@ -7,7 +7,8 @@ public class Menu : MonoBehaviour {
 	
 	public void Start()
 	{
-		player = GameObject.Find ("InputField").GetComponentInChildren<Text> ();
+		if(Application.loadedLevelName.Equals("StartScreen"))
+			player = GameObject.Find ("InputField").GetComponentInChildren<Text> ();
 	}
 	
 	public void iBeenClickedBoss()
@@ -18,5 +19,13 @@ public class Menu : MonoBehaviour {
 			
 			Application.LoadLevel (Application.loadedLevel + 1);
 		}
+	}
+
+	public void BeamMeUpScotty()
+	{
+		if (GameObject.FindWithTag ("GameController") != null) {
+			Destroy(GameObject.FindWithTag ("GameController"));
+		}
+		Application.LoadLevel("StartScreen");
 	}
 }

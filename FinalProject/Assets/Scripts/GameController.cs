@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 	//So i Know if im me or not
 	public static GameController gc;
 	//Cereal Eyes
-	private PlayerStats ps;
+	public PlayerStats ps;
 	//FOR THE DAMN HUD
 	private Text hudStuff;
 
@@ -49,24 +49,24 @@ public class GameController : MonoBehaviour
 			if (hudStuff == null)
 				hudStuff = GameObject.Find("HUD").GetComponent<Text>();
 			ps.time += Time.deltaTime;
-			hudStuff.text = (ps.player + "\nLives: " + ps.lives + "\nScore: " + ps.score + "\ntime" + (int)ps.time);
+			hudStuff.text = (ps.player + "\nLives: " + ps.lives + "\nScore: " + ps.score + "\ntime: " + (int)ps.time);
 		}
 	}
 
  	public void nextLvl()
 	{
-		Application.LoadLevel (ps.lvl + 1);
+		ps.lvl++;
+		Application.LoadLevel (ps.lvl);
 	}
 
 	public void lastLvl()
-	{
-		Application.LoadLevel (ps.lvl - 1);
+	{	ps.lvl--;
+		Application.LoadLevel (ps.lvl);
 	}
 
 	public void endGame()
 	{
-		Application.LoadLevel ("StartScreen");
-		Destroy (gameObject);
+		Application.LoadLevel ("EndScreen");
 	}
 
 	/*
